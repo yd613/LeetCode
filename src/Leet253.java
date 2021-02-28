@@ -82,9 +82,9 @@ public class Leet253 {
 
     public static void main(String[] args) {
         Leet253 leet = new Leet253();
-        int result = leet.minMeetingRooms(new int[][]{{0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 6}, {5, 7}});
+//        int result = leet.minMeetingRooms(new int[][]{{0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 6}, {5, 7}});
 //        int result = leet.minMeetingRooms(new int[][]{{0, 30}, {5, 10}, {15, 20}});
-//        int result = leet.minMeetingRooms(new int[][]{{7, 10}, {2, 4}});
+        int result = leet.minMeetingRooms(new int[][]{{7, 10}, {2, 7}});
         System.out.println(result);
     }
 }

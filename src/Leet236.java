@@ -1,5 +1,10 @@
 import treenode.TreeNode;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 /**
  * 236. 二叉树的最近公共祖先
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
@@ -36,8 +41,35 @@ import treenode.TreeNode;
  */
 public class Leet236 {
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public static void main(String[] args) {
+//        TreeNode node4 = new TreeNode(4);
+//        TreeNode node7 = new TreeNode(7);
+//        TreeNode node8 = new TreeNode(8);
+//        TreeNode node0 = new TreeNode(0);
+//        TreeNode node2 = new TreeNode(2, node7, node4);
+//        TreeNode node6 = new TreeNode(6);
+//        TreeNode node1 = new TreeNode(1, node0, node8);
+//        TreeNode node5 = new TreeNode(5, node6, node2);
+//        TreeNode node3 = new TreeNode(3, node5, node1);
+//        TreeNode result = new Leet236().lowestCommonAncestor(node3, node5, node4);
 
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node1 = new TreeNode(1, node2, null);
+        TreeNode result = new Leet236().lowestCommonAncestor(node1, node1, node2);
+
+        System.out.println(result.val);
+    }
+
+    /**
+     * 迭代
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return find_p_or_q(root, p, q);
     }
 
     private TreeNode find_p_or_q(TreeNode node, TreeNode p, TreeNode q) {
@@ -46,7 +78,7 @@ public class Leet236 {
             return null;
         }
 
-        // 左右子树为空
+        // 叶子节点
         if (node.left == null && node.right == null) {
             return determineNode(node, p, q);
         }
@@ -60,24 +92,31 @@ public class Leet236 {
             return determineNode(node, p, q);
         }
 
-        // 找到了，结果在左子树上
-        if (leftResult != null && leftResult != p && leftResult != q) {
+        // 在左子树找到了目标节点
+        else if (leftResult != null && leftResult != p && leftResult != q) {
             return leftResult;
         }
 
-        // 找到了，结果在右子树上
-        if (rightResult != null && rightResult != p && rightResult != q) {
+        // 在右子树找到了目标节点
+        else if (rightResult != null && rightResult != p && rightResult != q) {
             return rightResult;
         }
-        if ((leftResult == p || node == p) && (node == q || rightResult == q)) {
+
+        // 分别在左右子树或当前节点找到了p和q，即当前节点就是目标节点
+        else if ((leftResult == p || node == p) && (node == q || rightResult == q)) {
             return node;
-        }else if((leftResult == q || node == q) && (node == p || rightResult == p)){
+        } else if ((leftResult == q || node == q) && (node == p || rightResult == p)) {
             return node;
-        }else if(leftResult == p || node == p || rightResult == p){
+        }
+
+        // 在左右子树或当前节点找到了p或者q，返回p或q
+        else if (leftResult == p || node == p || rightResult == p) {
             return p;
-        }else if(leftResult == q || node == q || rightResult == q){
+        } else if (leftResult == q || node == q || rightResult == q) {
             return q;
         }
+
+        // 啥也不是
         return null;
     }
 
